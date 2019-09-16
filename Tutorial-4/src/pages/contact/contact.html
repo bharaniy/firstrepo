@@ -30,9 +30,12 @@
 </ion-item>
   <div align="center">
 <button ion-button class="button" (click)="extract()">GO</button>
-  <button  ion-button  class="button" color="black" (click)="analysis()">Analyze</button>
   </div>
+
+<!--  <div *ngIf="scores"-->
   <ion-list>
-    <h2 style="width: 200%" ><div *ngFor="let comment of comments"> <b><em>Comments : {{ comment.comment }}</em></b></div></h2>
+    <h2 style="width: 200%" ><div *ngFor="let comment of comments" ><b><em>Comments : {{ comment.comment }}  </em></b></div></h2>
+      <h2 style="width: 200%"><div *ngFor="let score of scores"><b><em>Positive Score: {{score.textpositive}} Negative Score: {{ score.textnegative}}</em></b></div> </h2>
+
     </ion-list>
 </ion-content>

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {HttpClient} from "@angular/common/http";
 import any = jasmine.any;
+import {replaceAll} from "@ionic/app-scripts";
 
 @Component({
   selector: 'page-contact',
@@ -14,6 +15,8 @@ export class ContactPage {
   todo: string;
   // @ts-ignore
   comments = [];
+  public scores =[];
+  text=[];
   public output;
   encode  =encodeURIComponent(this.link);
    //encoded : string = encodeURI(this.link);
@@ -33,15 +36,17 @@ export class ContactPage {
           "comment": data.objects[0].posts[i].text,
         };
         console.log(this.comments);
-      }
-    })
-  }
-      analysis() {
-        this.http.get("Https://cors-anywhere.herokuapp.com/https://api.uclassify.com/v1/uClassify/Sentiment/classify/?readKey=loR9jSP87ow7&text=This+is+the+text+to+classify").subscribe((data: any) => {
+        this.http.get("Https://cors-anywhere.herokuapp.com/https://api.uclassify.com/v1/uClassify/Sentiment/classify/?readKey=loR9jSP87ow7&text=" + this.comments).subscribe((data: any) => {
           {
             console.log(data);
+            this.output=data;
+              this.scores[i] = {
+                textpostive: data.positive,
+                textnegative: data.negative
+              }
+              console.log(this.scores[i]);
           }
-
         })
       }
-  }
+    })
+  }}
