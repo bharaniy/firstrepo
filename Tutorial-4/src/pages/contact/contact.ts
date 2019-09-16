@@ -9,44 +9,52 @@ import {replaceAll} from "@ionic/app-scripts";
   templateUrl: 'contact.html'
 })
 export class ContactPage {
-
   link: string;
-  //url1: string='https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3Dleopt__ATR0%0A';
   todo: string;
-  // @ts-ignore
   comments = [];
-  public scores =[];
-  text=[];
+  public scores = [];
+  text = [];
   public output;
-  encode  =encodeURIComponent(this.link);
-   //encoded : string = encodeURI(this.link);
+  encode = encodeURIComponent(this.link);
+
   constructor(public navCtrl: NavController, public http: HttpClient) {
 
   }
+
   extract() {
     console.log(this.link);
     console.log(this.encode);
     console.log("method entered");
-    +this.http.get('https://api.diffbot.com/v3/discussion?token=f105472d42803bca68eea6472c932d0b&url=https%3A%2F%2Ftwitter.com%2Fsearch%3Fq%3D%2523DragonBallSuper%26src%3Dtrend_click',
-    ).subscribe((data: any) => {
-      this.output = data;
-      console.log(data);
-      for (var i = 0; i < 10; i++) {
-        this.comments[i] = {
-          "comment": data.objects[0].posts[i].text,
-        };
-        console.log(this.comments);
-        this.http.get("Https://cors-anywhere.herokuapp.com/https://api.uclassify.com/v1/uClassify/Sentiment/classify/?readKey=loR9jSP87ow7&text=" + this.comments).subscribe((data: any) => {
-          {
-            console.log(data);
-            this.output=data;
-              this.scores[i] = {
-                textpostive: data.positive,
-                textnegative: data.negative
-              }
-              console.log(this.scores[i]);
-          }
-        })
+    +this.http.get('https://api.diffbot.com/v3/discussion?token=f105472d42803bca68eea6472c932d0b&url='+ this.encode).subscribe((data: any) => {
+        this.output = data;
+        console.log(data);
+        for (var i = 0; i < 10; i++) {
+          this.comments[i] = {
+            "comment": data.objects[0].posts[i].text,
+          };
+        }
       }
-    })
-  }}
+    )
+  }
+
+  analysis() {
+    for (let j=0; j < 10; j++) {
+    this.http.get("Https://cors-anywhere.herokuapp.com/https://api.uclassify.com/v1/uClassify/Sentiment/classify/?readKey=loR9jSP87ow7&text=" + this.comments[j]).subscribe((data: any) => {
+      {
+        this.output = data;
+        for (let j = 0; j < 10; j++) {
+          this.scores[j] = {
+            "textpositive": data.positive,
+            "textnegative": data.negative
+          }
+        }
+      }
+      })
+    }
+  }
+
+    }
+
+
+
+

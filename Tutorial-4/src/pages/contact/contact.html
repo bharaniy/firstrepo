@@ -7,35 +7,17 @@
     </ion-title>
   </ion-navbar>
 </ion-header>
-<!--<ion-content padding class="bg">    <ion-item>
-  <ion-input [(ngModel)]="todo" placeholder="Insert some todo here here" type="text"></ion-input>
-</ion-item>
-  <button ion-button (click)="add()">ADD</button>
-  <ion-list>
-    <ion-item-sliding *ngFor="let t of todos">
-      <ion-item>
-        {{t}}
-      </ion-item>
-      <ion-item-options side="right">
-        <button ion-button color="danger" (click)="delete(t)">
-          <ion-icon name="trash"></ion-icon> Delete
-        </button>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
-</ion-content>-->
 <ion-content padding class="bg">
 <ion-item>
   <ion-input [(ngModel)]="link" placeholder="Insert URL you wish to extract comments from here" type="text"></ion-input>
 </ion-item>
   <div align="center">
-<button ion-button class="button" (click)="extract()">GO</button>
+<button ion-button class="button" (click)="extract()">Tweets</button>
+    <button ion-button class="button" (click)="analysis()">Analysis</button>
   </div>
-
-<!--  <div *ngIf="scores"-->
+  <h2 style="width: 200%"><div *ngFor="let score of scores"><b><em>Positive Score: {{score.textpositive}} Negative Score: 0.356771 {{score.textnegative }}</em></b></div> </h2>
   <ion-list>
-    <h2 style="width: 200%" ><div *ngFor="let comment of comments" ><b><em>Comments : {{ comment.comment }}  </em></b></div></h2>
-      <h2 style="width: 200%"><div *ngFor="let score of scores"><b><em>Positive Score: {{score.textpositive}} Negative Score: {{ score.textnegative}}</em></b></div> </h2>
-
-    </ion-list>
+    <h1>Top 10 Tweets</h1>
+    <h2 style="width: 200%" ><div *ngFor="let comment of comments" ><b><em>Comments : {{ comment.comment }}  </em></b></div> </h2>
+  </ion-list>
 </ion-content>
